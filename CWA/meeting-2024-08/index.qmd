@@ -42,13 +42,13 @@ format:
 :::{.column width='65%'}
 已完成
 
-- 相容於地磁資料 (2019-2020)    [MagTIP-2020 (Archived) ^[https://github.com/CGRG-lab/MagTIP-2020]]{.rtag fragment-index=1 .fragment} 
-- 多通道/變量的支援 (2021-2022) [v2022 ^[https://github.com/CGRG-lab/MagTIP-2022/releases/tag/v2022]]{.rtag fragment-index=2 .fragment} 
-- 聯合地電/地磁測站的預報 (2023) [v2023 ^[https://github.com/CGRG-lab/MagTIP-2022/releases/tag/v2023]]{.rtag fragment-index=3 .fragment} 
+- 相容於地磁資料 (2019-2020)    [MagTIP-2020 (Archived) ^[https://github.com/CGRG-lab/MagTIP-2020]]{.nftag fragment-index=1 .fragment} 
+- 多通道/變量的支援 (2021-2022) [v2022 ^[https://github.com/CGRG-lab/MagTIP-2022/releases/tag/v2022]]{.nftag fragment-index=2 .fragment} 
+- 聯合地電/地磁測站的預報 (2023) [v2023 ^[https://github.com/CGRG-lab/MagTIP-2022/releases/tag/v2023]]{.nftag fragment-index=3 .fragment} 
 
 進行中
 
-- 資訊理論指標的計算與應用 (2023~) [v2024 (now working)]{.rtag fragment-index=4 .fragment}
+- 資訊理論指標的計算與應用 (2023~) [v2024 (now working)]{.nftag fragment-index=4 .fragment}
 - 除錯與持續維護
 
 :::
@@ -115,7 +115,7 @@ statind_parfor(dir_data, dir_stat, ... %
 
 anomalyind(dir_stat,dir_tsAIN);
 
-%% (4-1) Run Training
+%% (4-1) Training models of individual stations.
 molscore_parfor(dir_tsAIN,    dir_catalog, dir_molchan,    kwarg_molscore{:}); 
 
 %% (4-2) Probability Forecast and Calculate Fitting Degree score
@@ -201,7 +201,7 @@ jointstation_summary(dir_jointstation, 'GroupBy', {'prp'}, 'SummaryOfEQK', ...
 ::::{.columns}::::
 :::{.column width='50%'}
 
-下載最近的穩定版本^[最新版程式放在 [https://github.com/okatsn/MagTIP-2022](https://github.com/okatsn/MagTIP-2022){preview-link="false"}] ^[獲得存取權 (請聯絡宗羲或[CGRG-lab](https://github.com/CGRG-lab/){preview-link="false"}的成員)]
+下載最近的穩定版本^[程式儲存庫: [https://github.com/CGRG-lab/MagTIP-2022](https://github.com/CGRG-lab/MagTIP-2022){preview-link="false"}] ^[獲得存取權: 請聯絡宗羲或[CGRG-lab](https://github.com/CGRG-lab/){preview-link="false"}的成員]
 
 - 點擊 ![](github-code-button.png){.inlineimg}
 - 下載 ![](github-zip-button.png){.inlineimg}

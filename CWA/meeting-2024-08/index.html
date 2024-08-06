@@ -439,13 +439,13 @@
 <div class="column" style="width:65%;">
 <p>已完成</p>
 <ul>
-<li>相容於地磁資料 (2019-2020) <span class="rtag fragment" data-fragment-index="1">MagTIP-2020 (Archived) <sup>1</sup></span></li>
-<li>多通道/變量的支援 (2021-2022) <span class="rtag fragment" data-fragment-index="2">v2022 <sup>2</sup></span></li>
-<li>聯合地電/地磁測站的預報 (2023) <span class="rtag fragment" data-fragment-index="3">v2023 <sup>3</sup></span></li>
+<li>相容於地磁資料 (2019-2020) <span class="nftag fragment" data-fragment-index="1">MagTIP-2020 (Archived) <sup>1</sup></span></li>
+<li>多通道/變量的支援 (2021-2022) <span class="nftag fragment" data-fragment-index="2">v2022 <sup>2</sup></span></li>
+<li>聯合地電/地磁測站的預報 (2023) <span class="nftag fragment" data-fragment-index="3">v2023 <sup>3</sup></span></li>
 </ul>
 <p>進行中</p>
 <ul>
-<li>資訊理論指標的計算與應用 (2023~) <span class="rtag fragment" data-fragment-index="4">v2024 (now working)</span></li>
+<li>資訊理論指標的計算與應用 (2023~) <span class="nftag fragment" data-fragment-index="4">v2024 (now working)</span></li>
 <li>除錯與持續維護</li>
 </ul>
 </div><div class="column" style="width:35%;">
@@ -476,7 +476,7 @@
 </ol>
 </div>
 </div>
-<div id="9b584121" class="cell" data-fragment-index="1" data-execution_count="1">
+<div id="4183716b" class="cell" data-fragment-index="1" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" data-code-line-numbers="|8-9|10-19|23-30|32-36|38-45|46-54"><pre class="sourceCode numberSource octave number-lines code-with-copy"><code class="sourceCode octave"><span id="cb1-1"><a href=""></a><span class="co">%% Settings</span></span>
 <span id="cb1-2"><a href=""></a>kwarg_molscore <span class="op">=</span> {<span class="st">'TrainingPhase'</span><span class="op">,</span> [datetime(<span class="fl">2020</span><span class="op">,</span><span class="fl">1</span><span class="op">,</span><span class="fl">1</span>)<span class="op">,</span> datetime(<span class="fl">2023</span><span class="op">,</span><span class="fl">11</span><span class="op">,</span><span class="fl">1</span>)]}<span class="op">;</span></span>
 <span id="cb1-3"><a href=""></a>kwarg_jointstation <span class="op">=</span> {<span class="op">...</span></span>
@@ -508,7 +508,7 @@
 <span id="cb1-29"><a href=""></a></span>
 <span id="cb1-30"><a href=""></a>anomalyind(dir_stat<span class="op">,</span>dir_tsAIN)<span class="op">;</span></span>
 <span id="cb1-31"><a href=""></a></span>
-<span id="cb1-32"><a href=""></a><span class="co">%% (4-1) Run Training</span></span>
+<span id="cb1-32"><a href=""></a><span class="co">%% (4-1) Training models of individual stations.</span></span>
 <span id="cb1-33"><a href=""></a>molscore_parfor(dir_tsAIN<span class="op">,</span>    dir_catalog<span class="op">,</span> dir_molchan<span class="op">,</span>    kwarg_molscore{<span class="op">:</span>})<span class="op">;</span> </span>
 <span id="cb1-34"><a href=""></a></span>
 <span id="cb1-35"><a href=""></a><span class="co">%% (4-2) Probability Forecast and Calculate Fitting Degree score</span></span>
@@ -623,7 +623,7 @@
 
 <aside><div>
 
-</div><ol class="aside-footnotes"><li id="fn4"><p>最新版程式放在 <a href="https://github.com/okatsn/MagTIP-2022" data-preview-link="false">https://github.com/okatsn/MagTIP-2022</a></p></li><li id="fn5"><p>獲得存取權 (請聯絡宗羲或<a href="https://github.com/CGRG-lab/" data-preview-link="false">CGRG-lab</a>的成員)</p></li></ol></aside></section>
+</div><ol class="aside-footnotes"><li id="fn4"><p>程式儲存庫: <a href="https://github.com/CGRG-lab/MagTIP-2022" data-preview-link="false">https://github.com/CGRG-lab/MagTIP-2022</a></p></li><li id="fn5"><p>獲得存取權: 請聯絡宗羲或<a href="https://github.com/CGRG-lab/" data-preview-link="false">CGRG-lab</a>的成員</p></li></ol></aside></section>
 <section id="程式儲存庫-repository-1" class="slide level2 scrollable unlisted">
 <h2>程式儲存庫 (repository)</h2>
 <p><img src="okatsn-magtip2022-git-graph-202408.png" width="1500"> <!-- ![](okatsn-magtip2022-git-graph-202408.png){fig-align="center"} --></p>

@@ -37,6 +37,10 @@ blockquote {
     /* Semi-bold font weight */
 }
 
+// Tags
+// {.xtag} is equivalent to something like {style="float:right;text-align:right;color:red"}
+
+// Tag that floats to the right
 
 .rtag {
     font-size: 0.7em;
@@ -45,8 +49,9 @@ blockquote {
     background-color: #229954;
     border: 0.2em solid black;
     border-radius: 10px;
-    /* 10px rounded corners */
 }
+
+// Tag that floats to the left
 
 .ltag {
     font-size: 0.7em;
@@ -55,10 +60,19 @@ blockquote {
     background-color: #229954;
     border: 0.2em solid black;
     border-radius: 10px;
+}
+
+// No-floating tag
+
+.nftag {
+    font-size: 0.7em;
+    color: #fef9e7;
+    background-color: #229954;
+    border: 0.2em solid black;
+    border-radius: 10px;
     /* 10px rounded corners */
 }
 
-// {.rtag} is equivalent to v2022]{style="float:right;text-align:right;color:red"}
 
 // Inline image
 // Refer: https://stackoverflow.com/a/74100740
