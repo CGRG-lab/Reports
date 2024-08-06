@@ -1,0 +1,5 @@
+outs:
+- md5: cbc113abb8ee1642d725f8ac4ad5658a
+  size: 56653
+  hash: md5
+  path: event403_cluster1.png

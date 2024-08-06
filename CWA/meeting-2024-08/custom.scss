@@ -1,0 +1,68 @@
+/*-- scss:defaults --*/
+
+// $body-bg: #d6ffa448;
+// $body-color: #fff;
+$link-color: #186949;
+$code-color: #4758ab; // The same color for theme "serif"
+// $code-bg: #a3a3a3;
+
+// CHECKPOINT: Customize font: https://quarto.org/docs/presentations/revealjs/themes.html#creating-themes
+$font-family-sans-serif: "Noto Serif CJK TC Medium", "Noto Serif TC Medium",
+    FreeSerif, serif !default;
+
+$presentation-heading-font: "Noto Serif CJK TC Black", "Noto Serif TC Black",
+    FreeSerif, serif !default; // second choice of font.
+$presentation-heading-color: #383d3d !default;
+// !default means these settings can be overridden.
+
+/*-- scss:rules --*/
+
+// set sourceCode larger
+code.sourceCode {
+    font-size: larger;
+
+}
+
+blockquote {
+    font-size: smaller;
+}
+
+
+.thankyou p {
+    font-size: 4rem;
+    overflow-y: auto;
+    text-align: right;
+    color: #333;
+    font-weight: 600;
+    /* Semi-bold font weight */
+}
+
+
+.rtag {
+    font-size: 0.7em;
+    float: right;
+    color: #fef9e7;
+    background-color: #229954;
+    border: 0.2em solid black;
+    border-radius: 10px;
+    /* 10px rounded corners */
+}
+
+.ltag {
+    font-size: 0.7em;
+    float: left;
+    color: #fef9e7;
+    background-color: #229954;
+    border: 0.2em solid black;
+    border-radius: 10px;
+    /* 10px rounded corners */
+}
+
+// {.rtag} is equivalent to v2022]{style="float:right;text-align:right;color:red"}
+
+// Inline image
+// Refer: https://stackoverflow.com/a/74100740
+.inlineimg {
+    margin: 0 !important;
+    height: 1em;
+}

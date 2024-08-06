@@ -1,0 +1,5 @@
+# https://quarto.org/docs/publishing/ci.html#complete-examples
+- source: index.qmd
+  quarto-pub:
+    - id: 8ecdc117-6e37-46ab-be57-28329b2b1120
+      url: "https://okatsn.quarto.pub/report-20240806"

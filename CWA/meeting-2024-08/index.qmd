@@ -1,0 +1,249 @@
+---
+title: "GEMSTIP/MagTIP 移交與建站討論線上會議"
+execute: 
+    eval: false # by default don't evaluate cell
+    echo: true # echo source code to doc
+# subtitle: "OptionalSubtitle"
+title-slide-attributes: 
+    # data-background-image: background.png # https://www.slidebackground.com/collection/natural-ppt
+    data-background-size: contain
+    data-background-opacity: "0.5"
+author: # https://quarto.org/docs/authoring/front-matter.html
+    - name: "陳建志"
+    - name: "吳宗羲"
+date: 2024-08-06
+jupyter: octave
+# bibliography: main.bib
+format: 
+    revealjs:
+        width: 1600 # increasing width and height results in a smaller relative size of font in display
+        height: 900 # See [Presentation Size](https://quarto.org/docs/presentations/revealjs/advanced.html#presentation-size)
+        theme: [serif,custom.scss] # Please refer https://quarto.org/docs/presentations/revealjs/#themes
+        # logo: Fig_logo_bar_ncu.png
+        preview-links: auto # Allow preview links in presenting mode
+        slide-number: true
+        toc: true
+        toc-title: 討論議題 # Title for TOC
+        toc-depth: 3
+        # parallax-background-image: background.png
+        parallax-background-image: https://raw.githubusercontent.com/okatsn/QuartoTemplates/main/tree-slide/background.png
+        parallax-background-size: "1920px 1200px"
+        parallax-background-horizontal: 20
+        parallax-background-vertical: 20
+        footer: <https://github.com/CGRG-lab/>; <https://meet.google.com/tgt-fchh-dpr>
+        chalkboard: true
+---
+
+# GEMSTIP/MagTIP 移交報告
+
+## 發展歷史與現況
+
+::::{.columns}::::
+:::{.column width='65%'}
+已完成
+
+- 相容於地磁資料 (2019-2020)    [MagTIP-2020 (Archived) ^[https://github.com/CGRG-lab/MagTIP-2020]]{.rtag fragment-index=1 .fragment} 
+- 多通道/變量的支援 (2021-2022) [v2022 ^[https://github.com/CGRG-lab/MagTIP-2022/releases/tag/v2022]]{.rtag fragment-index=2 .fragment} 
+- 聯合地電/地磁測站的預報 (2023) [v2023 ^[https://github.com/CGRG-lab/MagTIP-2022/releases/tag/v2023]]{.rtag fragment-index=3 .fragment} 
+
+進行中
+
+- 資訊理論指標的計算與應用 (2023~) [v2024 (now working)]{.rtag fragment-index=4 .fragment}
+- 除錯與持續維護
+
+:::
+:::{.column width='35%'}
+未來工作
+
+- 研究機器學習的分析方法與 MagTIP/GEMSTIP 的結合應用和整合
+:::
+::::
+
+
+::: aside
+
+:::
+
+
+
+## 2024-04-03 花蓮地震分析計算
+::::{.columns}::::
+:::{.column width='50%'}
+1. <span class="fragment highlight-current-blue" fragment-index=1>資料選擇</span>
+2. <span class="fragment highlight-current-blue" fragment-index=2>建立資料清單</span>
+3. <span class="fragment highlight-current-blue" fragment-index=3>計算日異常指標</span>
+:::
+:::{.column width='50%'}
+4. <span class="fragment highlight-current-blue" fragment-index=4>訓練與計算預報結果</span>
+5. <span class="fragment highlight-current-blue" fragment-index=5>畫資料一覽圖與機率圖</span>
+6. <span class="fragment highlight-current-blue" fragment-index=6>將預報結果整理成表格格式</span>
+:::
+::::
+
+
+```{octave}
+#| fragment-index: "1"
+#| code-line-numbers: "|8-9|10-19|23-30|32-36|38-45|46-54"
+%% Settings
+kwarg_molscore = {'TrainingPhase', [datetime(2020,1,1), datetime(2023,11,1)]};
+kwarg_jointstation = {...
+    'CombinationNumber', 500, ...
+    'ForecastingPhase', [datetime(2024, 1, 1), datetime(2024, 5, 12)], ...
+    'ChooseBest', 10, 'OverwriteFile',0};
+
+%% (1) Select and Load data
+dirselectassign('dir_enan','dir_lish','dir_shch','dir_xc', 'dir_puli', 'dir_fenl', 'dir_daba', 'dir_yuli', 'dir_cs', 'dir_ruey');
+dir_data = [... % (2) Create data list
+datalist('*.mat',dir_enan, 'Search', '**FileOnly'); ...
+datalist('*.mat',dir_lish, 'Search', '**FileOnly'); ...
+datalist('*.mat',dir_shch, 'Search', '**FileOnly'); ...
+datalist('*.mat',dir_xc, 'Search', '**FileOnly'); ...
+datalist('*.mat',dir_fenl, 'Search', '**FileOnly'); ...
+datalist('*.mat',dir_yuli, 'Search', '**FileOnly'); ...
+datalist('*.mat',dir_cs, 'Search', '**FileOnly'); ...
+datalist('*.mat',dir_ruey, 'Search', '**FileOnly'); ...
+];
+
+
+
+%% (3) Calculate Daily Statistical Indices and Anomaly indices
+statind_parfor(dir_data, dir_stat, ... %        
+    'LoadFilters', '', 'UpdateExisting', false, ...
+    'Preprocess',{'ULF_A', 'BP_35'}, ... % , {'ULF_B', 'BP_40'}
+    'SkipExist', true, ... % remember to move your calculated std.
+    'FilterByDatetime', [datetime(2020,1,1), datetime(2999,12,31)]);
+
+anomalyind(dir_stat,dir_tsAIN);
+
+%% (4-1) Run Training
+molscore_parfor(dir_tsAIN,    dir_catalog, dir_molchan,    kwarg_molscore{:}); 
+
+%% (4-2) Probability Forecast and Calculate Fitting Degree score
+molscore3_parfor(dir_tsAIN,    dir_molchan,    dir_catalog, dir_jointstation,    kwarg_jointstation{:});
+
+%% (5) Data overview
+plot_dataoverview(dir_stat, dir_catalog);
+%% 2D Probability plot
+dates2plot = [datetime(2024,1,5):caldays(1):datetime(2024,5,5)]'; 
+mkdir(fullfile(pwd, "temp"))
+plotProbability(dir_jointstation,dir_catalog, "temp", ...
+    'PlotEpicenter', 'all', ...
+    'TimeRange',dates2plot);
+%% (6) Summarize Results into Tables for Further Analysis and Visualization
+dir_dataset = 'SummaryJointStation';
+mkdir(dir_dataset)
+jointstation_summary(dir_jointstation, 'GroupBy', {'prp', 'frc'},'CalculateNEQK', dir_catalog, ...
+    'SummaryOfTest', fullfile(dir_dataset,'PhaseTest_MIX_3yr_2024event403.csv'))
+
+% eqk summaries
+jointstation_summary(dir_jointstation, 'GroupBy', {'prp'}, 'SummaryOfEQK', ...
+   fullfile(dir_dataset,'PhaseTestEQK_MIX_3yr_2024event403.csv'))
+
+```
+
+
+## 2024-04-03 花蓮地震分析計算 {.unlisted auto-animate=true}
+
+::::{.columns}::::
+:::{.column width='50%'}
+- 訓練期: 2020-01-01 至 2023-11-01
+- 預報期: 2024-01-01 至 2024-05-05
+- 濾波頻段: ULF-A
+- 聯合測站：地電+地磁
+
+![](event403_cluster1.png){width="700px"}
+:::
+
+:::{.column width='50%'}
+![](event403_datarange.png){fig-align="right"}
+
+![](event403_probmap.gif){width="500px" fig-align="right"}
+
+:::
+::::
+
+
+## 2024-04-03 花蓮地震分析計算 {.unlisted auto-animate=true}
+
+::::{.columns}::::
+:::{.column width='50%'}
+- 訓練期: 2020-01-01 至 2023-11-01
+- 預報期: 2024-01-01 至 2024-05-05
+- 濾波頻段: ULF-A
+- 聯合測站：地電+地磁
+
+![](event403_cluster2.png){width="700px"}
+:::
+
+:::{.column width='50%'}
+![](event403_datarange.png){fig-align="right"}
+
+![](event403_probmap.gif){width="500px" fig-align="right"}
+
+:::
+::::
+
+
+
+# 程式與說明文件
+
+## 程式儲存庫 (repository) {.scrollable}
+
+::::{.columns}::::
+:::{.column width='53%'}
+![](cgrg-magtip2022.png){fig-align="center"}
+:::
+:::{.column width='33%'}
+![](cgrg-magtip2022-tags.png){fig-align="center"}
+:::
+::::
+
+::::{.columns}::::
+:::{.column width='50%'}
+
+下載最近的穩定版本^[最新版程式放在 [https://github.com/okatsn/MagTIP-2022](https://github.com/okatsn/MagTIP-2022){preview-link="false"}] ^[獲得存取權 (請聯絡宗羲或[CGRG-lab](https://github.com/CGRG-lab/){preview-link="false"}的成員)]
+
+- 點擊 ![](github-code-button.png){.inlineimg}
+- 下載 ![](github-zip-button.png){.inlineimg}
+:::
+:::{.column width='50%'}
+下載特定版本
+
+- 點擊 ![](github-tag-button.png){.inlineimg}
+- 下載 ![](github-zip-button.png){.inlineimg}
+:::
+::::
+
+::: aside
+:::
+
+## 程式儲存庫 (repository) {.scrollable .unlisted}
+<img src="okatsn-magtip2022-git-graph-202408.png" width="1500"/>
+<!-- ![](okatsn-magtip2022-git-graph-202408.png){fig-align="center"} -->
+
+
+## 說明文件 (舊版)
+
+[說明文件 (舊版)](https://cgrg-lab.github.io/doc-archive/docs/magtip/){preview-link="true"}
+
+
+::::{.columns}::::
+:::{.column width='33%'}
+<iframe width="780" height="500" src="https://cgrg-lab.github.io/doc-archive/docs/magtip/doc_tutorial/" title="Tutorial"></iframe>
+:::
+:::{.column width='33%'}
+<iframe width="780" height="500" src="https://cgrg-lab.github.io/doc-archive/docs/magtip/doc_library/" title="Library"></iframe>
+:::
+:::{.column width='33%'}
+<iframe width="780" height="500" src="https://cgrg-lab.github.io/doc-archive/docs/magtip/doc_git/" title="Setting up"></iframe>
+:::
+
+::::
+
+
+## {.unlisted}
+
+
+:::{.thankyou}
+謝謝各位的聆聽
+:::

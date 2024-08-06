@@ -1,0 +1,5 @@
+outs:
+- md5: 11bc2c6aaa08b9352a4974b898d64692
+  size: 959
+  hash: md5
+  path: github-tag-button.png

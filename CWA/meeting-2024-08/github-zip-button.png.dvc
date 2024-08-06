@@ -1,0 +1,5 @@
+outs:
+- md5: 05ea0ce59c96053f0de3bd7ecb25afd9
+  size: 3887
+  hash: md5
+  path: github-zip-button.png
